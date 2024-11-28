@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otázka</title>
+    <link rel="stylesheet" href="quiz_question.css">
+</head>
+<body>
+<div class="container">
+    <h1>Otázka 2</h1>
+    <progress id="progress-bar" value="2" max="10"></progress>
+    <p class="question">Ktoré mesto je hlavným mestom Česka?</p>
+    <form class="answers">
+        <label>
+            <input type="radio" name="answer" value="Bratislava" required>
+            Bratislava
+        </label>
+        <label>
+            <input type="radio" name="answer" value="Košice">
+            Košice
+        </label>
+        <label>
+            <input type="radio" name="answer" value="Praha">
+            Praha
+        </label>
+        <label>
+            <input type="radio" name="answer" value="Brno">
+            Brno
+        </label>
+    </form>
+    <div class="buttons">
+        <button class="end"><a href="quiz_question.html">Späť</a></button>
+        <button class="next" onclick="incrementProgress()"><a href="quiz_question10.html">Ďalšia</a></button>
+    </div>
+</div>
+
+<script>
+    // JavaScript to handle progress bar
+    function incrementProgress() {
+        const progressBar = document.getElementById('progress-bar');
+        if (progressBar.value < progressBar.max) {
+            progressBar.value += 1;
+        }
+    }
+</script>
+</body>
+</html>

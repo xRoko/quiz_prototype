@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Statistics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background Gradient */
+        body {
+            background: linear-gradient(to bottom, #3a69d4, #6a0dad);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+            color: snow;
+        }
+
+        /* Header Section */
+        .header {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Button */
+        .back-button {
+            background-color: #2ecc71;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1>Test Statistics</h1>
+    <p>Your performance summary for the test of 10 questions is displayed below.</p>
+</div>
+<div class="chart-container">
+    <canvas id="successChart"></canvas>
+</div>
+<button class="back-button"><a href="temy.html">Ukončiť</a></button>
+
+<script>
+    // Function to generate random statistics
+    function generateRandomStatistics(totalQuestions = 10) {
+        const correctAnswers = Math.floor(Math.random() * (totalQuestions + 1)); // Random correct answers (0 to 10)
+        const incorrectAnswers = totalQuestions - correctAnswers; // Calculate incorrect answers
+        return { correctAnswers, incorrectAnswers };
+    }
+
+    // Fetch statistics for the graph
+    const stats = generateRandomStatistics();
+
+    // Chart.js Graph
+    const ctx = document.getElementById('successChart').getContext('2d');
+    const successChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Correct Answers', 'Incorrect Answers'], // X-axis labels
+            datasets: [{
+                label: 'Number of Questions',
+                data: [stats.correctAnswers, stats.incorrectAnswers], // Y-axis values
+                backgroundColor: [
+                    'rgba(46, 204, 113, 0.8)', // Green for correct answers
+                    'rgba(231, 76, 60, 0.8)',  // Red for incorrect answers
+                ],
+                borderColor: [
+                    'rgba(46, 204, 113, 1)',
+                    'rgba(231, 76, 60, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Questions',
+                        color: 'black',
+                        font: { size: 14, weight: 'bold' },
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Answer Types',
+                        color: 'black',
+                        font: { size: 14, weight: 'bold' },
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return `${context.label}: ${context.raw} questions`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Functionality for the Back Button
+    function goBack() {
+        alert("Returning to the main page...");
+        window.location.href = 'index.html'; // Adjust the link as needed for your site
+    }
+</script>
+</body>
+</html>

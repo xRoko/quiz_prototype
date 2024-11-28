@@ -1,0 +1,47 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+    color: #333;
+    margin: 40px 0 30px; /* Add a bigger gap under the title */
+    text-align: center; /* Center title horizontally */
+}
+
+a {
+    text-decoration: none;
+    color: snow;
+}
+
+.rectangles {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px; /* Increase gap between rectangles */
+    margin: 0 auto;
+    width: 80%; /* Center rectangles container */
+}
+
+.rectangle {
+    width: 70%; /* Make rectangles wider (75% of the page width) */
+    height: 110px; /* Increase the height slightly */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px; /* Larger font size for better readability */
+    font-weight: bold;
+    border-radius: 12px; /* Slightly more rounded corners */
+    transition: background 1s ease-in-out;
+    cursor: pointer;
+}
+
+/* Gradient hover effect */
+.rectangle:hover {
+    background: linear-gradient(90deg, #a386f5, #d686f5, #f5a4c7);
+}

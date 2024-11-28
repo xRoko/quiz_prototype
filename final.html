@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success Page</title>
+    <style>
+        /* General Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background Gradient */
+        body {
+            background: linear-gradient(to bottom, #6a0dad, #3a69d4);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Center Box */
+        .success-box {
+            background: linear-gradient(to bottom, #5c0099, #340680);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            padding: 30px;
+            width: 300px;
+            color: white;
+            position: relative;
+        }
+
+        /* Main Text */
+        .success-box h1 {
+            font-size: 50px;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .success-box p {
+            margin: 10px 0 20px;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            color: snow;
+        }
+
+        /* Buttons */
+        .success-box .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .success-box button {
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .replay-button {
+            background-color: #2ecc71;
+        }
+
+        .share-button {
+            background-color: #e74c3c;
+        }
+
+        /* Confetti Canvas */
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+<canvas id="confetti"></canvas>
+<div class="success-box">
+    <h1>10/10</h1>
+    <p>Congratulations! You nailed it!</p>
+    <div class="buttons">
+        <button class="replay-button"><a href="start_quiz.html">Opakovať</a></button>
+        <button class="share-button"><a href="stats.html">Štatistiky</a></button>
+    </div>
+</div>
+
+<script>
+    // Confetti Animation Script
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confettiParticles = [];
+    const confettiColors = ['#f1c40f', '#2ecc71', '#3498db', '#e74c3c', '#9b59b6'];
+
+    class Confetti {
+        constructor(x, y, color, size, velocityX, velocityY) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.size = size;
+            this.velocityX = velocityX;
+            this.velocityY = velocityY;
+            this.opacity = 1;
+        }
+
+        update() {
+            this.x += this.velocityX;
+            this.y += this.velocityY;
+            this.opacity -= 0.008; // Slow opacity fade-out
+        }
+
+        draw() {
+            ctx.globalAlpha = this.opacity;
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x, this.y, this.size, this.size);
+        }
+    }
+
+    function createConfetti() {
+        for (let i = 0; i < 30; i++) { // Increased number of confetti particles per batch
+            const size = Math.random() * 6 + 4;
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * -50; // Spawn above the screen
+            const velocityX = (Math.random() - 0.5) * 3; // Slightly faster horizontal movement
+            const velocityY = Math.random() * 3 + 1;
+            const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            confettiParticles.push(new Confetti(x, y, color, size, velocityX, velocityY));
+        }
+    }
+
+    function animateConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confettiParticles.forEach((particle, index) => {
+            if (particle.opacity <= 0 || particle.y > canvas.height) {
+                confettiParticles.splice(index, 1);
+            } else {
+                particle.update();
+                particle.draw();
+            }
+        });
+        if (animationRunning) {
+            requestAnimationFrame(animateConfetti);
+        }
+    }
+
+    // Start Animation for 15 Seconds
+    let animationRunning = true;
+    createConfetti(); // Initial confetti
+    animateConfetti();
+    const confettiInterval = setInterval(createConfetti, 300); // Add more confetti every 0.3 seconds
+
+    setTimeout(() => {
+        animationRunning = false;
+        clearInterval(confettiInterval); // Stop generating new confetti
+    }, 15000); // Stop after 15 seconds
+</script>
+</body>
+</html>
